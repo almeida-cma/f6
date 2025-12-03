@@ -1,0 +1,5 @@
+2025-12-03 10:48:00,842 - INFO - Biblioteca Pymoo encontrada. Otimização NSGA-II ativa.
+2025-12-03 10:48:00,842 - INFO - --- INICIANDO SIMULAÇÃO COMPLETA ---
+2025-12-03 10:48:02,293 - INFO - 73 pacientes carregados.
+2025-12-03 10:48:02,300 - INFO - Simulando 720 horas...
+2025-12-03 10:48:34,471 - INFO - Simulação concluída com sucesso.

@@ -1,0 +1,27 @@
+2025-12-03 10:30:13,499 - INFO - INICIANDO PIPELINE DE EXTRAÇÃO E TREINAMENTO COMPLETO
+2025-12-03 10:36:08,797 - INFO - Total registros brutos: 129,290
+2025-12-03 10:36:08,797 - INFO - Criando features avançadas (Safety Mode: ON)...
+2025-12-03 10:36:10,820 - INFO - Features criadas. Dataset com 127,629 registros.
+2025-12-03 10:36:10,820 - INFO - Aplicando classificação de prioridade...
+2025-12-03 10:36:13,517 - INFO - Classificação de prioridade concluída.
+2025-12-03 10:36:13,517 - INFO - Criando escore de complexidade...
+2025-12-03 10:36:15,347 - INFO - --- INICIANDO FASE DE TREINAMENTO ---
+2025-12-03 10:36:15,504 - INFO - Dataset de treino: 102,103 registros
+2025-12-03 10:36:15,504 - INFO - Dataset de teste: 25,526 registros
+2025-12-03 10:36:15,504 - INFO - Features categóricas: ['SEXO', 'CAR_INT', 'CID_CATEGORIA', 'CID_CAPITULO', 'IDADE_CAT', 'CATEGORIA_COMPLEXIDADE']
+2025-12-03 10:36:15,504 - INFO - Features numéricas: ['IDADE', 'gravidade_gi', 'NUM_COMORBIDADES', 'ESCORE_COMPLEXIDADE']
+2025-12-03 10:36:15,504 - INFO - Treinando modelo XGBoost (com Sample Weights)...
+2025-12-03 10:37:12,120 - INFO - Avaliando performance...
+2025-12-03 10:37:15,193 - INFO - Performance: R²: 0.5383, MAE: 6.03, RMSE: 15.62
+2025-12-03 10:39:19,251 - INFO - Validação Cruzada MAE: 6.26 ± 0.15
+2025-12-03 10:39:19,282 - INFO - Relatório de performance avançado salvo em relatorios
+2025-12-03 10:39:21,206 - INFO - Gráficos de performance salvos em graficos
+2025-12-03 10:39:21,206 - INFO - Criando log detalhado de validação para principal_sem_leak...
+2025-12-03 10:39:21,223 - INFO - MAE por complexidade - principal_sem_leak:
+2025-12-03 10:39:21,237 - INFO -   BAIXA: 5.59 dias
+2025-12-03 10:39:21,237 - INFO -   MODERADA: 8.88 dias
+2025-12-03 10:39:21,237 - INFO - MAE por gravidade - principal_sem_leak:
+2025-12-03 10:39:21,237 - INFO -   Gravidade 1: 6.82 dias
+2025-12-03 10:39:21,237 - INFO -   Gravidade 2: 8.17 dias
+2025-12-03 10:39:21,237 - INFO -   Gravidade 3: 5.56 dias
+2025-12-03 10:39:21,463 - INFO - Log de validação principal_sem_leak salvo em: relatorios\validacao_modelo_teste_principal_sem_leak.csv

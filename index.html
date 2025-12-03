@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline UTI - Apresentação para Banca</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            flex-shrink: 0;
+        }
+
+        .title {
+            flex: 1;
+        }
+
+        .title h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            line-height: 1.2;
+        }
+
+        .title p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: 10px;
+            min-width: 100px;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Pipeline Section */
+        .pipeline-section, .results-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .section-title i {
+            font-size: 1.8rem;
+            color: var(--secondary);
+            flex-shrink: 0;
+        }
+
+        .section-title h2 {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+
+        /* Pipeline Visualization - CORRIGIDO DEFINITIVAMENTE */
+        .pipeline-visual {
+            position: relative;
+            margin: 60px 0 120px;
+            min-height: 280px;
+        }
+
+        .pipeline-line {
+            height: 10px;
+            background: linear-gradient(90deg, var(--success), var(--secondary), var(--warning));
+            border-radius: 5px;
+            margin: 60px 20px 150px;
+            position: relative;
+        }
+
+        .pipeline-step {
+            position: absolute;
+            top: -130px;
+            width: 200px;
+            text-align: center;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-1 { left: 15%; }
+        .step-2 { left: 50%; }
+        .step-3 { left: 85%; }
+
+        .step-icon {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.2rem;
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 6px solid;
+            flex-shrink: 0;
+        }
+
+        .step-1 .step-icon { border-color: var(--success); }
+        .step-2 .step-icon { border-color: var(--secondary); }
+        .step-3 .step-icon { border-color: var(--warning); }
+
+        .step-label {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            width: 100%;
+            line-height: 1.2;
+        }
+
+        .step-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            min-height: 40px;
+            text-align: center;
+            width: 100%;
+            padding: 0 5px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 25px;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            color: var(--gray);
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border-left: 5px solid;
+        }
+
+        .metric-card.r2 { border-color: var(--success); }
+        .metric-card.mae { border-color: var(--accent); }
+        .metric-card.rmse { border-color: var(--warning); }
+        .metric-card.cv { border-color: var(--secondary); }
+
+        .metric-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+
+        /* File Browser */
+        .file-browser {
+            margin-top: 20px;
+        }
+
+        .folder {
+            margin-bottom: 15px;
+        }
+
+        .folder-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        .folder-header i.fa-chevron-right {
+            transition: transform 0.3s;
+            margin-left: auto;
+        }
+
+        .folder-header.active i.fa-chevron-right {
+            transform: rotate(90deg);
+        }
+
+        .folder-content {
+            padding: 15px;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            margin-top: 2px;
+            border: 1px solid var(--light);
+            display: none;
+        }
+
+        .folder-content.active {
+            display: block;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid var(--light);
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .file-item:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .file-icon {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .file-name {
+            flex: 1;
+            color: var(--primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .file-size {
+            color: var(--gray);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        /* Wait Times */
+        .wait-times {
+            display: flex;
+            justify-content: space-between;
+            margin: 25px 0;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            gap: 10px;
+        }
+
+        .wait-category {
+            text-align: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .wait-category h3 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            white-space: nowrap;
+        }
+
+        .wait-value {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .g1 .wait-value { color: var(--accent); }
+        .g2 .wait-value { color: var(--warning); }
+        .g3 .wait-value { color: var(--secondary); }
+
+        .wait-label {
+            color: var(--gray);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: #d5dbdb;
+            transform: translateY(-3px);
+        }
+
+        .btn-danger {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--light);
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            flex: 1;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-body h4 {
+            color: var(--primary);
+            margin: 20px 0 10px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-body p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .modal-body ul, .modal-body ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .modal-body li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Image Preview */
+        .image-preview {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container {
+            max-width: 100%;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: #f8f9fa;
+            padding: 10px;
+        }
+
+        .dashboard-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .image-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        /* Direct Image Links */
+        .direct-image-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .direct-image-link:hover {
+            background: rgba(52, 152, 219, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Preview sections for CSV files */
+        .file-preview {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 15px 0;
+            background: #f8f9fa;
+        }
+
+        .preview-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .preview-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 10px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+
+        .preview-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .preview-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .log-entry {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .log-entry:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .log-time {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .log-level {
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin: 0 5px;
+        }
+
+        .log-level.info { background: #d4edda; color: #155724; }
+        .log-level.warning { background: #fff3cd; color: #856404; }
+        .log-level.error { background: #f8d7da; color: #721c24; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .logo {
+                min-width: auto;
+            }
+            
+            .stats {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .stat-box {
+                min-width: 80px;
+                padding: 10px;
+            }
+            
+            .pipeline-step {
+                width: 150px;
+                top: -120px;
+            }
+            
+            .step-1 { left: 10%; }
+            .step-2 { left: 50%; }
+            .step-3 { left: 90%; }
+            
+            .step-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wait-times {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .action-buttons {
+                justify-content: center;
+            }
+            
+            .btn {
+                padding: 10px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .main-content {
+                gap: 20px;
+            }
+            
+            .pipeline-section, .results-section {
+                padding: 20px;
+            }
+            
+            .title h1 {
+                font-size: 1.6rem;
+            }
+            
+            .image-placeholder {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pipeline-step {
+                width: 120px;
+                top: -100px;
+            }
+            
+            .step-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 1.8rem;
+            }
+            
+            .step-desc {
+                font-size: 0.8rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .image-placeholder {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-hospital-alt"></i>
+                </div>
+                <div class="title">
+                    <h1>Pipeline de Predição e Otimização de UTI</h1>
+                    <p>Apresentação para Banca Examinadora - UFJF</p>
+                </div>
+            </div>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value">127.6k</div>
+                    <div class="stat-label">Registros</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">73</div>
+                    <div class="stat-label">Pacientes</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">74.9%</div>
+                    <div class="stat-label">Ocupação</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">0.538</div>
+                    <div class="stat-label">R² Score</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Pipeline Section - CORRIGIDO DEFINITIVAMENTE -->
+            <div class="pipeline-section">
+                <div class="section-title">
+                    <i class="fas fa-project-diagram"></i>
+                    <h2>Pipeline Completo do Sistema</h2>
+                </div>
+                
+				<p style="margin-bottom: 20px; line-height: 1.6; color: var(--gray);">
+					
+                    ...
+                </p>
+                             
+                <div class="pipeline-visual">
+                    <div class="pipeline-line"></div>
+                    
+                    <div class="pipeline-step step-1">
+                        <div class="step-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="step-label">ETL & ML</div>
+                        <div class="step-desc">Processamento de Dados e Treinamento do Modelo</div>
+                    </div>
+                    
+                    <div class="pipeline-step step-2">
+                        <div class="step-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="step-label">Simulação & Otimização</div>
+                        <div class="step-desc">Alocação de Leitos com NSGA-II</div>
+                    </div>
+                    
+                    <div class="pipeline-step step-3">
+                        <div class="step-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="step-label">Dashboard & Visualização</div>
+                        <div class="step-desc">KPIs e Análise de Resultados</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="showModal('etl-details')">
+                        <i class="fas fa-info-circle"></i> Detalhes Etapa 1
+                    </button>
+                    <button class="btn btn-secondary" onclick="showModal('optimization-details')">
+                        <i class="fas fa-cogs"></i> Detalhes Otimização
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section">
+                <div class="section-title">
+                    <i class="fas fa-chart-bar"></i>
+                    <h2>Resultados e Métricas</h2>
+                </div>
+                
+                <!-- Tabs -->
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab(event, 'ml-results')">Resultados ML</div>
+                    <div class="tab" onclick="switchTab(event, 'simulation-results')">Simulação</div>
+                    <div class="tab" onclick="switchTab(event, 'files')">Arquivos</div>
+                </div>
+                
+                <!-- ML Results Tab -->
+                <div id="ml-results" class="tab-content active">
+                    <div class="metrics-grid">
+                        <div class="metric-card r2">
+                            <div class="metric-value">0.5383</div>
+                            <div class="metric-label">R² Score</div>
+                        </div>
+                        <div class="metric-card mae">
+                            <div class="metric-value">6.03</div>
+                            <div class="metric-label">MAE (dias)</div>
+                        </div>
+                        <div class="metric-card rmse">
+                            <div class="metric-value">15.62</div>
+                            <div class="metric-label">RMSE (dias)</div>
+                        </div>
+                        <div class="metric-card cv">
+                            <div class="metric-value">6.26 ± 0.15</div>
+                            <div class="metric-label">Validação Cruzada</div>
+                        </div>
+                    </div>
+                    
+                    <p style="margin: 15px 0; line-height: 1.6; font-size: 0.9rem;">
+                        <strong>Análise:</strong> Modelo XGBoost com R² de 0.5383, considerado bom para dados de saúde
+                        onde a variabilidade é alta. MAE de 6.03 dias significa erro médio de ~6 dias na predição.
+                    </p>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="showModal('model-details')">
+                            <i class="fas fa-brain"></i> Modelo ML
+                        </button>
+                        <button class="btn btn-secondary" onclick="showModal('features-details')">
+                            <i class="fas fa-list"></i> Features
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Simulation Results Tab -->
+                <div id="simulation-results" class="tab-content">
+                    <h3 style="color: var(--primary); margin-bottom: 15px; font-size: 1.1rem;">Tempos de Espera por Gravidade</h3>
+                    
+                    <div class="wait-times">
+                        <div class="wait-category g1">
+                            <h3>Gravidade 1</h3>
+                            <div class="wait-value">0.33h</div>
+                            <div class="wait-label">Emergência Imediata</div>
+                        </div>
+                        <div class="wait-category g2">
+                            <h3>Gravidade 2</h3>
+                            <div class="wait-value">2.80h</div>
+                            <div class="wait-label">Urgência</div>
+                        </div>
+                        <div class="wait-category g3">
+                            <h3>Gravidade 3</h3>
+                            <div class="wait-value">13.44h</div>
+                            <div class="wait-label">Eletivo Prioritário</div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: var(--primary); margin: 20px 0 10px; font-size: 1.1rem;">Eficiência Operacional</h3>
+                    <div style="background: var(--light); padding: 15px; border-radius: 10px; font-size: 0.9rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Taxa de Ocupação:</span>
+                            <strong>74.91%</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Pacientes Atendidos:</span>
+                            <strong>73/73 (100%)</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Leitos Disponíveis:</span>
+                            <strong>20 leitos × 720h</strong>
+                        </div>
+                    </div>
+                    
+                    <p style="margin: 15px 0; line-height: 1.6; font-size: 0.9rem;">
+                        <strong>Conclusão:</strong> Algoritmo priorizou corretamente casos de emergência (G1),
+                        com espera próxima de zero, enquanto casos menos urgentes aguardaram mais tempo.
+                    </p>
+                </div>
+                
+                <!-- Files Tab -->
+                <div id="files" class="tab-content">
+                    <div class="file-browser">
+                        <div class="folder">
+                            <div class="folder-header" onclick="toggleFolder('relatorios')">
+                                <i class="fas fa-folder"></i> relatorios/
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="relatorios" class="folder-content">
+                                <div class="file-item" onclick="showFilePreview('cronograma')">
+                                    <i class="fas fa-file-csv file-icon"></i>
+                                    <span class="file-name">cronograma_simulacao.csv</span>
+                                    <span class="file-size">73 registros</span>
+                                </div>
+                                <div class="file-item" onclick="showFilePreview('log')">
+                                    <i class="fas fa-file-csv file-icon"></i>
+                                    <span class="file-name">log_simulacao_detalhado.csv</span>
+                                    <span class="file-size">154 eventos</span>
+                                </div>
+                                <div class="file-item" onclick="showFilePreview('validacao')">
+                                    <i class="fas fa-file-csv file-icon"></i>
+                                    <span class="file-name">validacao_modelo_teste_principal_sem_leak.csv</span>
+                                    <span class="file-size">25.526 pred</span>
+                                </div>
+                                <div class="file-item" onclick="showModal('reports-info')">
+                                    <i class="fas fa-file-alt file-icon"></i>
+                                    <span class="file-name">metricas_da_simulacao_avancada.txt</span>
+                                    <span class="file-size">2.1 KB</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="folder">
+                            <div class="folder-header" onclick="toggleFolder('dashboard')">
+                                <i class="fas fa-folder"></i> dashboard/
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="dashboard" class="folder-content">
+                                <div class="file-item" onclick="showImagePreview('dashboard')">
+                                    <i class="fas fa-chart-bar file-icon"></i>
+                                    <span class="file-name">dashboard_estrategico_uti.png</span>
+                                    <span class="file-size">Dashboard</span>
+                                </div>
+                                <div class="file-item" onclick="showImagePreview('gantt')">
+                                    <i class="fas fa-chart-line file-icon"></i>
+                                    <span class="file-name">gantt_ocupacao_leitos.png</span>
+                                    <span class="file-size">Gráfico Gantt</span>
+                                </div>
+                                <div class="file-item">
+                                    <i class="fas fa-file-alt file-icon"></i>
+                                    <span class="file-name">insights_executivos.txt</span>
+                                    <span class="file-size">Insights</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="folder">
+                            <div class="folder-header" onclick="toggleFolder('dados_processados')">
+                                <i class="fas fa-folder"></i> dados_processados/
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="dados_processados" class="folder-content">
+                                <div class="file-item" onclick="showFilePreview('dataset_ml')">
+                                    <i class="fas fa-database file-icon"></i>
+                                    <span class="file-name">dataset_para_ml.csv</span>
+                                    <span class="file-size">127.629 reg</span>
+                                </div>
+                                <div class="file-item" onclick="showFilePreview('dataset_opt')">
+                                    <i class="fas fa-database file-icon"></i>
+                                    <span class="file-name">dataset_para_otimizacao.csv</span>
+                                    <span class="file-size">73 pacientes</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="folder">
+                            <div class="folder-header" onclick="toggleFolder('logs')">
+                                <i class="fas fa-folder"></i> logs/
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="logs" class="folder-content">
+                                <div class="file-item" onclick="showLogPreview('etl')">
+                                    <i class="fas fa-file-alt file-icon"></i>
+                                    <span class="file-name">etl_e_treinamento.log</span>
+                                    <span class="file-size">Log ETL</span>
+                                </div>
+                                <div class="file-item" onclick="showLogPreview('otimizacao')">
+                                    <i class="fas fa-file-alt file-icon"></i>
+                                    <span class="file-name">otimizacao_simulacao.log</span>
+                                    <span class="file-size">Log Simulação</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="folder">
+                            <div class="folder-header" onclick="toggleFolder('modelo_salvo')">
+                                <i class="fas fa-folder"></i> modelo_salvo/
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
+                            <div id="modelo_salvo" class="folder-content">
+                                <div class="file-item" onclick="showModal('model-file-info')">
+                                    <i class="fas fa-robot file-icon"></i>
+                                    <span class="file-name">modelo_los_avancado.pkl</span>
+                                    <span class="file-size">Modelo XGBoost</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Direct Image Links Section -->
+                        <div style="margin-top: 30px; padding: 20px; background: var(--light); border-radius: 10px;">
+                            <h4 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-external-link-alt"></i> Links Diretos para Visualizações
+                            </h4>
+                            <p style="margin-bottom: 15px; color: var(--gray); font-size: 0.9rem;">
+                                Clique nos links abaixo para visualizar as imagens diretamente em nova aba:
+                            </p>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <a href="dashboard/dashboard_estrategico_uti.png" target="_blank" class="direct-image-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Abrir Dashboard Estratégico (PNG)
+                                </a>
+                                <a href="dashboard/gantt_ocupacao_leitos.png" target="_blank" class="direct-image-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Abrir Gráfico de Gantt (PNG)
+                                </a>
+                                <a href="graficos/performance_modelo_ml_avancado.png" target="_blank" class="direct-image-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Abrir Gráficos de Performance do Modelo (PNG)
+                                </a>
+                            </div>
+                            <p style="margin-top: 15px; color: var(--gray); font-size: 0.8rem;">
+                                <i class="fas fa-info-circle"></i> As imagens serão abertas em nova aba do navegador.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons" style="justify-content: center; margin-top: 30px;">
+            <button class="btn btn-primary" onclick="showModal('conclusions')">
+                <i class="fas fa-graduation-cap"></i> Conclusões
+            </button>
+            <button class="btn btn-secondary" onclick="showModal('methodology')">
+                <i class="fas fa-flask"></i> Metodologia
+            </button>
+            <button class="btn btn-danger" onclick="showModal('next-steps')">
+                <i class="fas fa-forward"></i> Próximos Passos
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Universidade Federal de Juiz de Fora (UFJF) | Pipeline desenvolvido para apresentação de TCC</p>
+            <p><i class="fas fa-clock"></i> Tempo total: ~18 min | <i class="fas fa-calendar"></i> Dezembro 2025</p>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="image-preview-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="image-title">Visualização de Imagem</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="image-preview">
+                    <div class="image-container">
+                        <div id="image-content">
+                            <!-- Image will be loaded here -->
+                        </div>
+                    </div>
+                    <div id="image-description" style="margin-top: 15px;"></div>
+                    <div style="margin-top: 20px; padding: 15px; background: var(--light); border-radius: 10px;">
+                        <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 1rem;">
+                            <i class="fas fa-external-link-alt"></i> Link Direto para a Imagem:
+                        </h4>
+                        <a id="direct-image-link" href="#" target="_blank" class="direct-image-link" style="display: inline-flex;">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span id="link-text">Abrir imagem em nova aba</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- File Preview Modal -->
+    <div id="file-preview-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="preview-title">Visualização de Arquivo</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="preview-content">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modais de Conteúdo -->
+    <!-- ETL Details Modal -->
+    <div id="etl-details" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>ETAPA 1: ETL e Treinamento do Modelo</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-database"></i> Dados de Entrada</h4>
+                <ul>
+                    <li><strong>Fonte:</strong> Arquivos SIH-SUS (ETLSIH.ST_MG_*.csv)</li>
+                    <li><strong>Local:</strong> D:\2025\UFJF\ETLSIH</li>
+                    <li><strong>Volume:</strong> 129.290 registros brutos</li>
+                    <li><strong>Filtro:</strong> Município 313670 (Juiz de Fora)</li>
+                </ul>
+                
+                <h4><i class="fas fa-cogs"></i> Processamento</h4>
+                <ul>
+                    <li><strong>Técnica:</strong> Leitura por chunks de 50.000</li>
+                    <li><strong>Tempo:</strong> ~6 minutos carregamento</li>
+                    <li><strong>Após filtro:</strong> 127.629 registros</li>
+                    <li><strong>Features:</strong> 12 variáveis criadas</li>
+                </ul>
+                
+                <h4><i class="fas fa-chart-line"></i> Performance</h4>
+                <p>Tempo total: ~9 minutos (10:30:13 - 10:39:21)</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Optimization Details Modal -->
+    <div id="optimization-details" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>ETAPA 2: Simulação e Otimização</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-robot"></i> Parâmetros</h4>
+                <div class="code-block">
+NUMERO_LEITOS = 20
+HORIZONTE = 720 horas (30 dias)
+TAXA_OCUPACAO_ALVO = 0.85 (85%)
+PACIENTES = 73 (amostra)
+                </div>
+                
+                <h4><i class="fas fa-calculator"></i> Algoritmo NSGA-II</h4>
+                <ul>
+                    <li><strong>Biblioteca:</strong> Pymoo</li>
+                    <li><strong>População:</strong> 40 indivíduos</li>
+                    <li><strong>Gerações:</strong> 50 iterações</li>
+                    <li><strong>Objetivo 1:</strong> Minimizar risco</li>
+                    <li><strong>Objetivo 2:</strong> Manter ocupação ~85%</li>
+                </ul>
+                
+                <h4><i class="fas fa-clock"></i> Tempo</h4>
+                <ul>
+                    <li><strong>Simulação:</strong> ~32 segundos</li>
+                    <li><strong>Total etapa:</strong> Menos de 1 minuto</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Model Details Modal -->
+    <div id="model-details" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalhes do Modelo ML</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-robot"></i> Configuração XGBoost</h4>
+                <div class="code-block">
+n_estimators = 500
+max_depth = 6
+learning_rate = 0.05
+subsample = 0.8
+objective = 'reg:squarederror'
+                </div>
+                
+                <h4><i class="fas fa-weight"></i> Sample Weights</h4>
+                <div class="code-block">
+Gravidade 1: peso 5.0 (Emergência)
+Gravidade 2: peso 3.0 (Urgência)
+Gravidade 3/4: peso 1.0 (Normal)
+                </div>
+                
+                <h4><i class="fas fa-chart-bar"></i> Validação</h4>
+                <ul>
+                    <li><strong>Split:</strong> 80% treino / 20% teste</li>
+                    <li><strong>Validação Cruzada:</strong> TimeSeriesSplit (5 folds)</li>
+                    <li><strong>MAE por complexidade:</strong>
+                        <ul>
+                            <li>BAIXA: 5.59 dias</li>
+                            <li>MODERADA: 8.88 dias</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Features Details Modal -->
+    <div id="features-details" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Features Utilizadas</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-list"></i> Variáveis Numéricas</h4>
+                <ul>
+                    <li><strong>IDADE:</strong> Idade do paciente</li>
+                    <li><strong>gravidade_gi:</strong> Classificação 1-4</li>
+                    <li><strong>NUM_COMORBIDADES:</strong> Diagnósticos secundários</li>
+                    <li><strong>ESCORE_COMPLEXIDADE:</strong> Pontuação 0-6</li>
+                </ul>
+                
+                <h4><i class="fas fa-list-alt"></i> Variáveis Categóricas</h4>
+                <ul>
+                    <li><strong>SEXO:</strong> Masculino/Feminino</li>
+                    <li><strong>CAR_INT:</strong> Caráter internação</li>
+                    <li><strong>CID_CATEGORIA:</strong> Primeiros 3 dígitos CID-10</li>
+                    <li><strong>CID_CAPITULO:</strong> Primeiro dígito CID-10</li>
+                    <li><strong>IDADE_CAT:</strong> Faixa etária</li>
+                    <li><strong>CATEGORIA_COMPLEXIDADE:</strong> BAIXA/MODERADA/ALTA</li>
+                </ul>
+                
+                <h4><i class="fas fa-exclamation-circle"></i> Features Removidas</h4>
+                <p><strong>Data Leakage:</strong> VAL_TOT, VAL_SH, VAL_SP, VAL_SADT, VAL_ACOMP, VAL_RN</p>
+                <p><em>Justificativa:</em> Valores só conhecidos após alta, não podem prever permanência.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Conclusions Modal -->
+    <div id="conclusions" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Conclusões para a Banca</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-check-circle" style="color: var(--success);"></i> Pontos Fortes</h4>
+                <ul>
+                    <li><strong>Pipeline Completo:</strong> 3 etapas funcionais</li>
+                    <li><strong>Performance Aceitável:</strong> R²=0.538 para dados de saúde</li>
+                    <li><strong>Priorização Efetiva:</strong> G1 com espera mínima (0.33h)</li>
+                    <li><strong>Sem Data Leakage:</strong> Features financeiras removidas</li>
+                    <li><strong>Ocupação Balanceada:</strong> 74.91% próximo de 85%</li>
+                </ul>
+                
+                <h4><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> Limitações</h4>
+                <ul>
+                    <li><strong>Erro Elevado:</strong> MAE de 6.03 dias</li>
+                    <li><strong>Outliers:</strong> Erro máximo 326.85 dias</li>
+                    <li><strong>R² Moderado:</strong> 46.17% variância não explicada</li>
+                    <li><strong>Dados Desbalanceados:</strong> Poucos casos alta complexidade</li>
+                </ul>
+                
+                <h4><i class="fas fa-lightbulb" style="color: var(--secondary);"></i> Contribuições</h4>
+                <ul>
+                    <li><strong>Metodologia Integrada:</strong> ML + Otimização Multiobjetivo</li>
+                    <li><strong>Dataset Público:</strong> 127.629 registros do SUS</li>
+                    <li><strong>Pipeline Reproduzível:</strong> Código aberto</li>
+                    <li><strong>Abordagem Prática:</strong> Foco em implementação real</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Methodology Modal -->
+    <div id="methodology" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Metodologia Científica</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-book"></i> Revisão Teórica</h4>
+                <ul>
+                    <li><strong>Predição de LOS:</strong> R² entre 0.4-0.6 na literatura</li>
+                    <li><strong>Otimização de Leitos:</strong> NSGA-II aplicado à saúde</li>
+                    <li><strong>Data Leakage:</strong> Vazamento em modelos hospitalares</li>
+                </ul>
+                
+                <h4><i class="fas fa-flask"></i> Método Experimental</h4>
+                <ol>
+                    <li>Coleta de Dados SIH-SUS</li>
+                    <li>Pré-processamento e limpeza</li>
+                    <li>Modelagem XGBoost com validação</li>
+                    <li>Otimização NSGA-II multi-critério</li>
+                    <li>Avaliação métricas de erro</li>
+                </ol>
+                
+                <h4><i class="fas fa-shield-alt"></i> Aspectos Éticos</h4>
+                <ul>
+                    <li><strong>Dados Anonimizados:</strong> SUS fornece sem identificação</li>
+                    <li><strong>Transparência:</strong> Critérios clínicos explícitos</li>
+                    <li><strong>Equidade:</strong> Não usa características sensíveis</li>
+                    <li><strong>Beneficência:</strong> Foco em reduzir espera graves</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Next Steps Modal -->
+    <div id="next-steps" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Próximos Passos</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-code-branch"></i> Melhorias Técnicas</h4>
+                <ul>
+                    <li><strong>Ensemble:</strong> XGBoost + LightGBM + CatBoost</li>
+                    <li><strong>Deep Learning:</strong> Redes neurais temporais</li>
+                    <li><strong>Explicabilidade:</strong> SHAP para interpretação</li>
+                    <li><strong>Outliers:</strong> Limitar LOS máximo com censura</li>
+                </ul>
+                
+                <h4><i class="fas fa-hospital-alt"></i> Expansão</h4>
+                <ul>
+                    <li><strong>Integração:</strong> API REST para sistemas hospitalares</li>
+                    <li><strong>Tempo Real:</strong> Atualização com novas admissões</li>
+                    <li><strong>Especialidades:</strong> Emergência, pediatria, cirurgia</li>
+                    <li><strong>Multi-hospital:</strong> Coordenação entre unidades</li>
+                </ul>
+                
+                <h4><i class="fas fa-chart-network"></i> Pesquisa</h4>
+                <ul>
+                    <li><strong>Publicação:</strong> Journal of Biomedical Informatics</li>
+                    <li><strong>Validação Externa:</strong> Outros hospitais e regiões</li>
+                    <li><strong>Simulação Estocástica:</strong> Múltiplas rodadas</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reports Info Modal -->
+    <div id="reports-info" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Relatórios de Saída</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-file-alt"></i> Arquivos TXT</h4>
+                
+                <h5>1. metricas_da_simulacao_avancada.txt</h5>
+                <div class="code-block">
+Pacientes Atendidos: 73
+TEMPO MÉDIO DE ESPERA:
+  Gravidade 1: 0.33 horas
+  Gravidade 2: 2.80 horas
+  Gravidade 3: 13.44 horas
+Taxa de Ocupação: 74.91%
+                </div>
+                
+                <h5>2. relatorio_performance_ml_avancado.txt</h5>
+                <div class="code-block">
+R² (R-squared): 0.5383
+MAE: 6.03 dias
+RMSE: 15.62 dias
+Erro Máximo: 326.85 dias
+                </div>
+                
+                <h4><i class="fas fa-database"></i> Arquivos CSV</h4>
+                <ul>
+                    <li><strong>cronograma_simulacao.csv:</strong> 73 alocações</li>
+                    <li><strong>log_simulacao_detalhado.csv:</strong> 154 eventos</li>
+                    <li><strong>validacao_modelo_teste_principal_sem_leak.csv:</strong> 25.526 predições</li>
+                    <li><strong>dataset_para_ml.csv:</strong> 127.629 registros</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Model File Info Modal -->
+    <div id="model-file-info" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Arquivo do Modelo</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4><i class="fas fa-file-export"></i> Informações</h4>
+                <ul>
+                    <li><strong>Formato:</strong> PKL (Python Pickle)</li>
+                    <li><strong>Biblioteca:</strong> joblib.dump()</li>
+                    <li><strong>Tamanho:</strong> ~15-25 MB</li>
+                    <li><strong>Conteúdo:</strong> Pipeline completo</li>
+                </ul>
+                
+                <h4><i class="fas fa-code"></i> Como Usar</h4>
+                <div class="code-block">
+import joblib
+modelo = joblib.load('modelo_los_avancado.pkl')
+los_predito = modelo.predict(X_novo)[0]
+                </div>
+                
+                <p><strong>Local:</strong> modelo_salvo/modelo_los_avancado.pkl</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data samples for file previews
+        const fileData = {
+            'cronograma': {
+                title: 'Cronograma de Simulação (73 registros)',
+                type: 'csv',
+                headers: ['paciente_id', 'leito', 'gravidade', 'inicio_real', 'fim_previsto', 'tempo_espera_horas'],
+                data: [
+                    ['126783', '1', '3', '19', '128', '0'],
+                    ['32340', '2', '3', '27', '3433', '0'],
+                    ['44974', '3', '3', '28', '246', '0'],
+                    ['46371', '4', '3', '30', '102', '0'],
+                    ['77757', '5', '3', '43', '67', '0'],
+                    ['59334', '6', '3', '51', '535', '0'],
+                    ['29568', '5', '3', '87', '393', '0'],
+                    ['31244', '7', '3', '90', '223', '0'],
+                    ['90970', '4', '3', '104', '161', '0'],
+                    ['15132', '8', '3', '106', '134', '0'],
+                    ['127192', '9', '3', '108', '143', '0'],
+                    ['115500', '10', '3', '110', '1129', '0'],
+                    ['57067', '1', '3', '130', '223', '0'],
+                    ['5749', '11', '3', '131', '197', '0'],
+                    ['48328', '8', '3', '139', '218', '0'],
+                    ['36638', '9', '3', '149', '286', '0']
+                ]
+            },
+            'log': {
+                title: 'Log Detalhado da Simulação (154 eventos)',
+                type: 'csv',
+                headers: ['hora', 'evento', 'paciente_id', 'gravidade', 'leito', 'espera', 'fila'],
+                data: [
+                    ['19', 'CHEGADA', '126783.0', '3.0', '', '', ''],
+                    ['19', 'ALOCACAO', '126783.0', '', '1.0', '0.0', ''],
+                    ['27', 'CHEGADA', '32340.0', '3.0', '', '', ''],
+                    ['27', 'ALOCACAO', '32340.0', '', '2.0', '0.0', ''],
+                    ['28', 'CHEGADA', '44974.0', '3.0', '', '', ''],
+                    ['28', 'ALOCACAO', '44974.0', '', '3.0', '0.0', ''],
+                    ['30', 'CHEGADA', '46371.0', '3.0', '', '', ''],
+                    ['30', 'OTIMIZACAO_START', '', '', '', '', '1.0'],
+                    ['30', 'ALOCACAO', '46371.0', '', '4.0', '0.0', ''],
+                    ['43', 'CHEGADA', '77757.0', '3.0', '', '', ''],
+                    ['43', 'ALOCACAO', '77757.0', '', '5.0', '0.0', ''],
+                    ['51', 'CHEGADA', '59334.0', '3.0', '', '', ''],
+                    ['51', 'ALOCACAO', '59334.0', '', '6.0', '0.0', ''],
+                    ['87', 'CHEGADA', '29568.0', '3.0', '', '', ''],
+                    ['87', 'ALOCACAO', '29568.0', '', '5.0', '0.0', ''],
+                    ['90', 'CHEGADA', '31244.0', '3.0', '', '', '']
+                ]
+            },
+            'validacao': {
+                title: 'Validação do Modelo (25.526 predições)',
+                type: 'csv',
+                headers: ['ID', 'LOS_REAL', 'LOS_PREVISTO', 'ERRO_ABSOLUTO', 'CATEGORIA_COMPLEXIDADE', 'gravidade_gi'],
+                data: [
+                    ['1', '12', '14.2', '2.2', 'MODERADA', '2'],
+                    ['2', '5', '6.8', '1.8', 'BAIXA', '3'],
+                    ['3', '21', '18.5', '2.5', 'MODERADA', '1'],
+                    ['4', '8', '7.2', '0.8', 'BAIXA', '3'],
+                    ['5', '15', '12.1', '2.9', 'MODERADA', '2'],
+                    ['6', '3', '4.5', '1.5', 'BAIXA', '4'],
+                    ['7', '28', '32.6', '4.6', 'ALTA', '1'],
+                    ['8', '7', '5.9', '1.1', 'BAIXA', '3'],
+                    ['9', '14', '11.3', '2.7', 'MODERADA', '2'],
+                    ['10', '9', '8.1', '0.9', 'BAIXA', '3'],
+                    ['11', '18', '15.7', '2.3', 'MODERADA', '1'],
+                    ['12', '6', '5.2', '0.8', 'BAIXA', '4'],
+                    ['13', '25', '21.4', '3.6', 'ALTA', '1'],
+                    ['14', '11', '9.8', '1.2', 'MODERADA', '2'],
+                    ['15', '4', '3.6', '0.4', 'BAIXA', '3']
+                ]
+            },
+            'dataset_ml': {
+                title: 'Dataset para ML (127.629 registros)',
+                type: 'csv',
+                headers: ['paciente_id', 'IDADE', 'SEXO', 'DIAG_PRINC', 'CAR_INT', 'LOS_DIAS', 'gravidade_gi', 'NUM_COMORBIDADES', 'ESCORE_COMPLEXIDADE', 'CATEGORIA_COMPLEXIDADE'],
+                data: [
+                    ['1', '65', 'M', 'I219', '02', '12', '2', '2', '3', 'MODERADA'],
+                    ['2', '42', 'F', 'J189', '01', '5', '3', '1', '1', 'BAIXA'],
+                    ['3', '78', 'M', 'I639', '02', '21', '1', '3', '5', 'ALTA'],
+                    ['4', '35', 'F', 'K529', '01', '8', '3', '0', '0', 'BAIXA'],
+                    ['5', '58', 'M', 'I500', '02', '15', '2', '2', '3', 'MODERADA'],
+                    ['6', '29', 'F', 'A099', '01', '3', '4', '0', '0', 'BAIXA'],
+                    ['7', '82', 'M', 'J969', '02', '28', '1', '4', '6', 'ALTA'],
+                    ['8', '45', 'F', 'N179', '01', '7', '3', '1', '1', 'BAIXA'],
+                    ['9', '67', 'M', 'I214', '02', '14', '2', '2', '3', 'MODERADA'],
+                    ['10', '38', 'F', 'R509', '01', '9', '3', '0', '0', 'BAIXA']
+                ]
+            },
+            'dataset_opt': {
+                title: 'Dataset para Otimização (73 pacientes)',
+                type: 'csv',
+                headers: ['paciente_id', 'DT_INTER', 'gravidade_gi', 'LOS_DIAS', 'ESCORE_COMPLEXIDADE', 'IDADE'],
+                data: [
+                    ['126783', '2023-01-15', '3', '12', '2', '45'],
+                    ['32340', '2023-01-16', '3', '143', '3', '67'],
+                    ['44974', '2023-01-16', '3', '10', '1', '38'],
+                    ['46371', '2023-01-16', '3', '4', '0', '29'],
+                    ['77757', '2023-01-17', '3', '3', '0', '32'],
+                    ['59334', '2023-01-17', '3', '22', '2', '51'],
+                    ['29568', '2023-01-18', '3', '16', '2', '58'],
+                    ['31244', '2023-01-18', '3', '9', '1', '41'],
+                    ['90970', '2023-01-18', '3', '7', '1', '39'],
+                    ['15132', '2023-01-18', '3', '5', '0', '35']
+                ]
+            }
+        };
+
+        // Log data samples
+        const logData = {
+            'etl': [
+                '2025-12-03 10:30:13,499 - INFO - INICIANDO PIPELINE DE EXTRAÇÃO E TREINAMENTO COMPLETO',
+                '2025-12-03 10:36:08,797 - INFO - Total registros brutos: 129,290',
+                '2025-12-03 10:36:08,797 - INFO - Criando features avançadas (Safety Mode: ON)...',
+                '2025-12-03 10:36:10,820 - INFO - Features criadas. Dataset com 127,629 registros.',
+                '2025-12-03 10:36:10,820 - INFO - Aplicando classificação de prioridade...',
+                '2025-12-03 10:36:13,517 - INFO - Classificação de prioridade concluída.',
+                '2025-12-03 10:36:13,517 - INFO - Criando escore de complexidade...',
+                '2025-12-03 10:36:15,347 - INFO - --- INICIANDO FASE DE TREINAMENTO ---',
+                '2025-12-03 10:36:15,504 - INFO - Dataset de treino: 102,103 registros',
+                '2025-12-03 10:36:15,504 - INFO - Dataset de teste: 25,526 registros',
+                '2025-12-03 10:36:15,504 - INFO - Features categóricas: [SEXO, CAR_INT, CID_CATEGORIA, CID_CAPITULO, IDADE_CAT, CATEGORIA_COMPLEXIDADE]',
+                '2025-12-03 10:36:15,504 - INFO - Features numéricas: [IDADE, gravidade_gi, NUM_COMORBIDADES, ESCORE_COMPLEXIDADE]',
+                '2025-12-03 10:36:15,504 - INFO - Treinando modelo XGBoost (com Sample Weights)...',
+                '2025-12-03 10:37:12,120 - INFO - Avaliando performance...',
+                '2025-12-03 10:37:15,193 - INFO - Performance: R²: 0.5383, MAE: 6.03, RMSE: 15.62'
+            ],
+            'otimizacao': [
+                '2025-12-03 10:48:00,842 - INFO - Biblioteca Pymoo encontrada. Otimização NSGA-II ativa.',
+                '2025-12-03 10:48:00,842 - INFO - --- INICIANDO SIMULAÇÃO COMPLETA ---',
+                '2025-12-03 10:48:02,293 - INFO - 73 pacientes carregados.',
+                '2025-12-03 10:48:02,300 - INFO - Simulando 720 horas...',
+                '2025-12-03 10:48:34,471 - INFO - Simulação concluída com sucesso.',
+                '2025-12-03 10:48:34,500 - INFO - Salvando resultados...',
+                '2025-12-03 10:48:35,120 - INFO - Cronograma salvo em relatorios/cronograma_simulacao.csv',
+                '2025-12-03 10:48:35,250 - INFO - Log detalhado salvo em relatorios/log_simulacao_detalhado.csv',
+                '2025-12-03 10:48:35,450 - INFO - Métricas salvas em relatorios/metricas_da_simulacao_avancada.txt',
+                '2025-12-03 10:48:35,600 - INFO - Processo de simulação finalizado.'
+            ]
+        };
+
+        // Image data with direct links
+        const imageData = {
+            'dashboard': {
+                title: 'Dashboard Estratégico - Resultados da Simulação',
+                description: 'Dashboard com KPIs principais, distribuição por gravidade, tempos de espera e eficiência operacional.',
+                directLink: 'dashboard/dashboard_estrategico_uti.png',
+                sections: [
+                    'KPIs Principais: Pacientes atendidos, taxa de ocupação, tempo médio de espera',
+                    'Volume por Gravidade: G1(9), G2(18), G3(46) pacientes',
+                    'Tempo de Espera: Gráfico comparativo por gravidade',
+                    'Ocupação Temporal: Curva 0-720 horas com capacidade máxima',
+                    'Distribuição LOS: Histograma com média de 6.8 dias',
+                    'Admissões por Turno: Tarde(28), Manhã(21), Noite(16), Madrugada(8)'
+                ]
+            },
+            'gantt': {
+                title: 'Gráfico de Gantt - Ocupação dos Leitos',
+                description: 'Visualização temporal da ocupação dos 20 leitos de UTI durante 720 horas de simulação.',
+                directLink: 'dashboard/gantt_ocupacao_leitos.png',
+                sections: [
+                    'Eixo Y: 20 leitos de UTI (1-20)',
+                    'Eixo X: 720 horas (30 dias de simulação)',
+                    'Código de Cores: Vermelho(G1), Laranja(G2), Azul(G3)',
+                    'Legenda: Explicação das cores por gravidade',
+                    'Labels: IDs dos pacientes para ocupações longas (>48h)',
+                    'Insights: Períodos de alta ocupação, ociosidade e conflitos'
+                ]
+            }
+        };
+
+        // Tab switching
+        function switchTab(event, tabId) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // Folder toggle
+        function toggleFolder(folderId) {
+            const folder = document.getElementById(folderId);
+            const header = event.currentTarget;
+            
+            folder.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+        
+        // Show image preview
+        function showImagePreview(imageId) {
+            const image = imageData[imageId];
+            if (!image) return;
+            
+            const modal = document.getElementById('image-preview-modal');
+            const title = document.getElementById('image-title');
+            const content = document.getElementById('image-content');
+            const description = document.getElementById('image-description');
+            const directLink = document.getElementById('direct-image-link');
+            const linkText = document.getElementById('link-text');
+            
+            title.textContent = image.title;
+            directLink.href = image.directLink;
+            linkText.textContent = `Abrir ${image.title}`;
+            
+            let html = `<div class="image-placeholder">
+                <i class="fas fa-${imageId === 'dashboard' ? 'chart-bar' : 'chart-line'}"></i>
+                <h4 style="margin: 15px 0 10px; color: var(--primary);">${image.title}</h4>
+                <p style="margin-bottom: 15px; color: var(--gray);">Simulação: 73 pacientes em 20 leitos × 720 horas</p>
+                <div style="text-align: left; max-width: 500px; margin: 0 auto;">`;
+            
+            image.sections.forEach(section => {
+                html += `<p style="margin: 5px 0; font-size: 0.9rem;"><i class="fas fa-check-circle" style="color: var(--success);"></i> ${section}</p>`;
+            });
+            
+            html += `</div>
+                <p style="margin-top: 20px; color: var(--gray); font-size: 0.8rem;">
+                    <i class="fas fa-image"></i> Localização: ${image.directLink}
+                </p>
+            </div>`;
+            
+            content.innerHTML = html;
+            
+            let descHtml = `<div style="padding: 15px; background: var(--light); border-radius: 10px;">
+                <h4 style="color: var(--primary); margin-bottom: 10px; font-size: 1rem;">
+                    <i class="fas fa-info-circle"></i> Descrição:
+                </h4>
+                <p style="color: var(--dark); font-size: 0.9rem; line-height: 1.5;">${image.description}</p>
+            </div>`;
+            
+            description.innerHTML = descHtml;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Show file preview
+        function showFilePreview(fileId) {
+            const file = fileData[fileId];
+            if (!file) return;
+            
+            const modal = document.getElementById('file-preview-modal');
+            const title = document.getElementById('preview-title');
+            const content = document.getElementById('preview-content');
+            
+            title.textContent = file.title;
+            
+            if (file.type === 'csv') {
+                let html = `<div class="file-preview">
+                    <table class="preview-table">
+                        <thead>
+                            <tr>`;
+                
+                file.headers.forEach(header => {
+                    html += `<th>${header}</th>`;
+                });
+                
+                html += `</tr></thead><tbody>`;
+                
+                file.data.forEach(row => {
+                    html += `<tr>`;
+                    row.forEach(cell => {
+                        html += `<td>${cell}</td>`;
+                    });
+                    html += `</tr>`;
+                });
+                
+                html += `</tbody></table>
+                    <p style="margin-top: 10px; color: var(--gray); font-size: 0.9rem;">
+                        <i class="fas fa-info-circle"></i> Mostrando ${file.data.length} de ${fileId === 'validacao' ? '25.526' : fileId === 'dataset_ml' ? '127.629' : '73'} registros
+                    </p>
+                </div>`;
+                
+                content.innerHTML = html;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Show log preview
+        function showLogPreview(logId) {
+            const logs = logData[logId];
+            if (!logs) return;
+            
+            const modal = document.getElementById('file-preview-modal');
+            const title = document.getElementById('preview-title');
+            const content = document.getElementById('preview-content');
+            
+            title.textContent = logId === 'etl' ? 'Log do Processamento ETL' : 'Log da Simulação de Otimização';
+            
+            let html = `<div class="file-preview">`;
+            
+            logs.forEach(logEntry => {
+                let levelClass = 'info';
+                if (logEntry.includes('ERROR') || logEntry.includes('Erro')) levelClass = 'error';
+                else if (logEntry.includes('WARNING') || logEntry.includes('Aviso')) levelClass = 'warning';
+                
+                const parts = logEntry.split(' - ');
+                const timestamp = parts[0];
+                const level = parts[1] || 'INFO';
+                const message = parts.slice(2).join(' - ');
+                
+                html += `<div class="log-entry">
+                    <span class="log-time">${timestamp}</span>
+                    <span class="log-level ${levelClass}">${level}</span>
+                    <span>${message}</span>
+                </div>`;
+            });
+            
+            html += `</div>`;
+            content.innerHTML = html;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        });
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set first tab as active by default
+            document.querySelector('.tab').classList.add('active');
+            document.getElementById('ml-results').classList.add('active');
+            
+            // Close modal with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

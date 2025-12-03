@@ -1,0 +1,9 @@
+RELATÓRIO DE INSIGHTS - SIMULAÇÃO UTI
+=====================================
+
+1. CAPACIDADE DE ATENDIMENTO
+   - O sistema atendeu 73 pacientes.
+   - Taxa de ocupação: 120.72%.
+
+2. PRIORIZAÇÃO
+   - Espera G1: 0.3h | Espera G3: 13.4h.

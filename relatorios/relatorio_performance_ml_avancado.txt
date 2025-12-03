@@ -1,0 +1,9 @@
+RELATÓRIO DE PERFORMANCE - MODELO PREDITIVO DE LOS (CORRIGIDO)
+======================================================================
+
+Métrica R² (R-squared): 0.5383
+Erro Médio Absoluto (MAE): 6.03 dias
+Raiz do Erro Quadrático Médio (RMSE): 15.62 dias
+
+Mediana do Erro Absoluto: 2.87 dias
+Erro Absoluto Máximo: 326.85 dias
